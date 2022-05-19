@@ -51,6 +51,10 @@ app.get("/", function(req, res) {
     })
 })
 
+app.get("/home", function(req, res) {
+    res.sendFile(__dirname + "/Home/home.html")
+})
+
 app.post("/", function(req, res) {
     let newUser = new User({
         userType: req.body.userType,
