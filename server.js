@@ -6,7 +6,7 @@ const ejs = require('ejs');
 
 app.set('view engine', 'ejs');
 
-const { stringify } = require("nodemon/lib/utils");
+const {stringify} = require("nodemon/lib/utils");
 mongoose.connect("mongodb+srv://software:software123@cluster0.cv6lp.mongodb.net/test", { useNewUrlParser: true}, {useUnifiedTopology: true})
 
 const userSchema = {
@@ -75,7 +75,6 @@ app.post("/", function(req, res) {
     newApartment.save();
     res.redirect("/");
 })
-
 app.listen(3000, function() {
     console.log("Server is running on 3000");
 });
