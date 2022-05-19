@@ -16,9 +16,15 @@ const User = mongoose.model("User", userSchema);
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/SignUp'));
+//app.use(express.static(__dirname + '/Home'));
+
 
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/SignUp/sign_up.html")
+})
+
+app.get("/home", function(req, res) {
+    res.sendFile(__dirname + "/Home/home.html")
 })
 
 app.post("/", function(req, res) {
