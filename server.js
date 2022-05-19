@@ -111,7 +111,6 @@ app.post("/", function(req, res) {
     newApartment.save();
     res.redirect("/");
 })
-
 app.listen(3000, function() {
     console.log("Server is running on 3000");
 });
