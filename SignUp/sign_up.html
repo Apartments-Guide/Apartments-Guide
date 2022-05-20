@@ -77,61 +77,20 @@ function isVaalidPassword(password){
 getStarted.addEventListener('click', IsValidData);
 
 
-
-// async function signUp() {
-//     let user = {
-//         username:"",
-//         email:"",
-//         password:"",
-//         currency:""
-//     };
-//     let user_Name = document.getElementById("name").value,
-//         user_Email = document.getElementById("email").value,
-//         user_Password = document.getElementById("password").value,
-//         user_Currency = document.getElementById("currency").value;
-
-//         IsValidData(user_Name,user_Email,user_Password)
-//     if(checkEmptyInput(user_Name,user_Email,user_Password) && !IsValidData(user_Name,user_Email,user_Password))
-//         return;
-//     user.username = user_Name
-//     user.email = user_Email
-//     user.password = user_Password
-//     user.currency = user_Currency
-
-//     try {
-//         const response = await fetch("http://127.0.0.1:3000/api/v1/auth/signup", {
-//             "method": "post",
-//             "headers": {
-//                 "Content-Type": "application/json"
-//             },
-//             "body": JSON.stringify(user)
-
-//         })
-//         console.log(response)
-//         if(response.status == 409){
-//             mailExistMsg.style.display = "block"
-//         }
-//     } catch (e) {
-//         console.log("error", e.message)
-//     }
-    
-// }
-
-
 //user can show or hide password
-function showPassword() {
-    const togglePassword = document.getElementsByClassName('hidePsw')[0];
-    togglePassword.onclick = function () {
-      let password = document.getElementById('password');
-      // toggle the type attribute
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      // toggle the eye slash icon
-      const src= togglePassword.getAttribute('src')==='../assets/img/hideEye.svg'?'../assets/img/showEye.svg':'../assets/img/hideEye.svg';
-      togglePassword.setAttribute('src',src);
-    };
-}
-  showPassword();
+// function showPassword() {
+//     const togglePassword = document.getElementsByClassName('hidePsw')[0];
+//     togglePassword.onclick = function () {
+//       let password = document.getElementById('password');
+//       // toggle the type attribute
+//       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+//       password.setAttribute('type', type);
+//       // toggle the eye slash icon
+//       const src= togglePassword.getAttribute('src')==='../assets/img/hideEye.svg'?'../assets/img/showEye.svg':'../assets/img/hideEye.svg';
+//       togglePassword.setAttribute('src',src);
+//     };
+// }
+//   showPassword();
 
 	</script>
 	</body>

@@ -21,9 +21,9 @@
 	<div class= "sign-up-form">
 	<h1>Login</h1>
 	<form method="post" action="/login">
-	<input type="email" class="input-box" placeholder="Your Email" name="email" required>
-	<input type="password" class="input-box" placeholder="Your Password" name="password" required>
-	<button type= "submit" class="signup-btn">Login</button>
+	<input type="email" class="input-box" placeholder="Your Email" name="email" id="email" required>
+	<input type="password" class="input-box" placeholder="Your Password" name="password" id="password" required>
+	<button type= "submit" class="signup-btn" id="submit">Login</button>
 	<hr>
 	<p style="color:#1c8adb; font-family: 'Times New Roman'; font-weight: bold;">OR</p>
 	</form>
@@ -31,5 +31,64 @@
 		<button type="submit" class="signup-btn">Sign Up</button>
 	</a>
 	</div>
+
+	<script>
+		subitBtn = document.getElementById("submit");
+		//subitBtn.addEventListener('click', login);
+		let  user_Email = document.getElementById("email").value,
+				user_Password = document.getElementById("password").value;
+		console.log(user_Password, "passsssssssssssss")
+		(function () {
+			var old = console.log;
+			var logger = document.getElementById('log');
+			console.log = function (message) {
+				if (typeof message == 'object') {
+					logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+				} else {
+					logger.innerHTML += message + '<br />';
+				}
+			}
+		})();
+		async function login() {
+			console.log("hi from the frontenddddddddd")
+			let  user_Email = document.getElementById("email").value,
+				user_Password = document.getElementById("password").value,
+				user_Type =1;
+
+
+			// IsValidData(user_Email,user_Password)
+			// if(!IsValidData(user_Email,user_Password))
+			// 	return;
+
+			let user = {
+				email:"",
+				password:"",
+				userType:""
+			};
+
+			user.email = user_Email
+			user.password = user_Password
+			user.userType = user_Type
+					
+			try {
+				const response = await fetch("/login", {
+					"method": "post",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": JSON.stringify(user)
+				})
+				console.log(response, 'resposeeeeee')
+				// if(response.status == 409){
+				//     mailExistMsg.style.display = "block"
+				// }
+			} catch (e) {
+				console.log("error", e.message)
+			}
+			
+		}
+
+
+	</script>
 	</body>
  </html>

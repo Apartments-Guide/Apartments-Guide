@@ -122,14 +122,19 @@ app.post("/login", function(req, res) {
         if(user) {
             if(user.password == checkUser.password) {
                 if(user.userType == '1')
-                    res.redirect("/addapartments");
+                    //res.redirect("/addapartments");
+                    console.log('Email is not found');
                 else
-                    res.redirect("/apartments_view");
+                console.log('Email is not found');
+                    //res.redirect("/apartments_view");
             }
             else {
-                console.log('Password is wrong'); //Show it to the user
+                //console.log('Password is wrong'); //Show it to the user
+                console.log('Email is not found');
             }
         } else {
+            // res.send('Email is not found');
+            // res.jsonp({success : true})
             console.log('Email is not found'); //Show it to the user
         }
     })
