@@ -46,16 +46,16 @@ app.use(express.static(__dirname + '/Home'));
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/Add'));
 // app.use(express.static(__dirname + '/Login'));
-// app.use(express.static(__dirname + '/SignUp'));
+app.use(express.static(__dirname + '/SignUp'));
 
 
 
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/Home/home.html")
 });
-app.get("/signup", function(req, res) {
-    res.sendFile(__dirname + "/SignUp/sign_up.html")
-});
+
+
+
 app.get("/login", function(req, res) {
     res.sendFile(__dirname + "/Login/login.html")
 });
@@ -94,10 +94,14 @@ app.get("/addapartments", function(req, res) {
     res.sendFile(__dirname + "/Add/AddApartment.html")
 });
 
+app.get("/signup", function(req, res) {
+    res.sendFile(__dirname + "/views/sign_up.html")
+});
 
 app.post("/signup", function(req, res) {
     let password = req.body.password;
-    if(isVaalidPassword(password)){
+
+    if(isVaalidPassword(password, res)){
         let newUser = new User({
             userType: req.body.userType,
             email: req.body.email,
@@ -107,28 +111,17 @@ app.post("/signup", function(req, res) {
         res.redirect("/login");
     }
 })
-    function isVaalidPassword(password){
+    function isVaalidPassword(password, res){
         let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        if(password.match(strongRegex) == null){
-            if(password.length >= 8)
+        let result = 'The password is weak';
+        if(password.match(strongRegex) != null){
                 return true;
         }
-        console.log(false);
+        res.render('signup', {
+            passwordCheck: result
+        })
         return false;
     }
-
-// app.post("/showpassword",function showPassword() {
-//     const togglePassword = document.getElementsByClassName('hidePsw')[0];
-//     togglePassword.onclick = function () {
-//       let password = document.getElementById('password');
-//       // toggle the type attribute
-//       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-//       password.setAttribute('type', type);
-//       // toggle the eye slash icon
-//       const src= togglePassword.getAttribute('src')==='../assets/img/hideEye.svg'?'../assets/img/showEye.svg':'../assets/img/hideEye.svg';
-//       togglePassword.setAttribute('src',src);
-//     };
-// })
 
 app.post("/login", function(req, res) {
     const checkUser = new User({
@@ -140,14 +133,19 @@ app.post("/login", function(req, res) {
         if(user) {
             if(user.password == checkUser.password) {
                 if(user.userType == '1')
-                    res.redirect("/addapartments");
+                    //res.redirect("/addapartments");
+                    console.log('Email is not found');
                 else
-                    res.redirect("/apartments_view");
+                console.log('Email is not found');
+                    //res.redirect("/apartments_view");
             }
             else {
-                console.log('Password is wrong'); //Show it to the user
+                //console.log('Password is wrong'); //Show it to the user
+                console.log('Email is not found');
             }
         } else {
+            // res.send('Email is not found');
+            // res.jsonp({success : true})
             console.log('Email is not found'); //Show it to the user
         }
     })
