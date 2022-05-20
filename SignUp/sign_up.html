@@ -26,61 +26,43 @@
 		<option value="2">Customer</option>
 	</select>
 	<input type="email" class="input-box" placeholder="Your Email" name="email" id="email" required>
+	<p id="msgExistMail">This email has been registered</p>
+	<p id="msgIncorrectMail">Incorrect Email</p>
 	<input type="password" class="input-box" placeholder="Your Password" name="password" id="password" required>
+	<p id="msgPass">Password must be at least 8 charachters and contains at laast Uoercase letter, lowercase letter, digit and special character e.g. !@#$%^&*/-+</p>
 	<button type= "submit" class="signup-btn" id='submit'> Sign up</button>
 	<hr>
 	<p style="color:#1c8adb; font-family: 'Times New Roman'; font-weight: bold;">OR</p>
-	<button type="submit'" class="signup-btn"> Login </button>
-	
 	</form>
-
+	<a href="/login">
+		<button type="submit" class="signup-btn">Login</button>
+	</a>
 	</div>
 	<script>
-		
 
-//getStarted = document.getElementsByClassName("signupbtn")[0],
+
+getStarted = document.getElementsByClassName("signup-btn")[0],
 email = document.getElementById("email").value;
 password = document.getElementById("password").value;
 
-$('#submit').click(function(assetInfo){
-	cosnole.log(email, 'pkpkp[[pp[p');
-  if (email== '' || password == '') {
-    alert('Input can not be left blank');
-  }
-});
-msgEmpty = document.getElementById("msgEmpty"),
 input = Array.from(document.getElementsByTagName("input")),
 mailExistMsg = document.getElementById("msgExistMail");
 mailIncorrectMsg = document.getElementById("msgIncorrectMail");
 passMsg = document.getElementById("msgPass");
+mailExistMsg.style.display = "none"
+mailIncorrectMsg.style.display = "none"
+passMsg.style.display = "none"
 
 input.forEach(element => {
     element.addEventListener('change', removeAlert)
 });
 function removeAlert() {
-    msgEmpty.style.display = "none"
     mailExistMsg.style.display = "none"
     mailIncorrectMsg.style.display = "none"
     passMsg.style.display = "none"
 }
 
 
-
-function IsValidData (email, password){
-    IsValidEmail(email)
-    isVaalidPassword(password)
-    return IsValidName(name) && IsValidEmail(email) && isVaalidPassword(password);
-}
-
-function IsValidEmail(email){
-    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if(email.match(validRegex) != null){
-        return true;
-    }
-    mailIncorrectMsg.style.display = "block"
-    return false;
-    
-}
 
 function isVaalidPassword(password){
     let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
@@ -92,7 +74,7 @@ function isVaalidPassword(password){
 }
 
 
-// getStarted.addEventListener('click', signUp);
+getStarted.addEventListener('click', IsValidData);
 
 
 
