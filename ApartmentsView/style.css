@@ -109,7 +109,7 @@ display: none;
 }
 .sales .box:hover{
   background: var(--main-color);
-  color: var (--bg-color);
+  color: var(--bg-color);
   transition: 0.4s all linear;
 }
 .sales .box .bx{ 
