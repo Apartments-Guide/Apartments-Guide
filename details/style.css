@@ -92,13 +92,13 @@ margin: 1rem 0 1rem;
 }
 .navbar a {
 	padding: 8px 17px;
-	color: var (--text-color) ;
+	color: var(--text-color) ;
 	font-size: 1rem;
 	text-transform: uppercase;
 	font-weight: 500;
 }
-.navbar a: hover {
-	color: var (--main-color) ;
+.navbar a:hover {
+	color: var(--main-color) ;
 }
 #menu-icon {
 font-size: 24px;

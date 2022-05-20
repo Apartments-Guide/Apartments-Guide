@@ -1,0 +1,42 @@
+<html>
+<head>
+	<link rel="icon" href="https://www.rawshorts.com/freeicons/wp-content/uploads/2017/01/blue_repicthousebase_1484336386-1.png" type="image/x-icon">
+	<title> Add Apartment Form</title>
+	<link rel="stylesheet" href="style3.css">
+</head>
+<body>
+	<header> 
+		<div class="nav container">
+		    <!--logo-->
+			<a href="home.html"class="logo"><i class='bx bx-home'></i>Apartment Guide</a>
+			<!--Menu Icon-->
+			<input type="checkbox" name="" id="menu">
+			<label for="menu"<i class='bx bx-menu' id="menu-icon" ></i></label>
+			<!--Nav List-->
+			<ul class="navbar">
+				<li><a href="/">Home</a> </li>
+				
+			</ul>
+		</div>
+	</header> 
+	<div class= "add-apartment-form">
+	<h1>Add Apartment</h1>
+	<form method="post" action="/addapartments">
+	<select name="Apartment Status" class="input-box">
+		<option value="1">Avilable</option>
+		<option value="2">Unavilable</option>
+	</select>
+	<input type="price" class="input-box" placeholder="price" name="price">
+	<input type="number of room " class="input-box" placeholder="number of room" name="numOfRooms">
+	<input type="number of bathroom" class="input-box" placeholder="number of bathroom" name="numOfBathroom">
+	<input type="area" class="input-box" placeholder="area" name="area">
+	<input type="Location" class="input-box" placeholder="location" name="location">
+	<input type="Contact Number" class="input-box" placeholder="Contact Number" name="contactNum">
+	<input type="description" class="input-box" placeholder="description" name="description">
+	<input type="apartmentPicture" class="input-box" placeholder="apartment Picture" name="apartmentPicture">
+<hr>
+	<button type= "submit" class="add-btn">Add Apartment</button>
+	</form>
+	</div>
+	</body>
+ </html>
