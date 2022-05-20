@@ -20,7 +20,7 @@ const apartmentSchema = {
     apartmentStatus: Number,    //1 means avilable        2 means unavilable
     apartmentID: Number,
     userID: Number,
-    apartmentPicture: String,
+
     price: Number,
     numOfRooms: Number,
     numOfBathroom: Number,
@@ -28,8 +28,8 @@ const apartmentSchema = {
     location: String,
     contactNum: String,
     description: String,
-    img: String,
-}
+    apartmentPicture: String,
+    }
 
 const User = mongoose.model("User", userSchema);
 const Apartment = mongoose.model("Apartment", apartmentSchema);
@@ -196,7 +196,7 @@ app.post("/addapartments", function(req, res) {
         location: req.body.location,
         contactNum: req.body.contactNum,
         description: req.body.description,
-        img: req.body.img
+        apartmentPicture: req.body.apartmentPicture
     });
     newApartment.save();
     res.redirect("/apartments_view");
