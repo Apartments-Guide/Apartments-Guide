@@ -64,8 +64,6 @@ app.get("/apartments_view", function(req, res) {
         res.render('apartmentsView', {
             apartmentsList: apartments 
         })
-        //if(apartments.length) console.log(apartments);
-        //else console.log("Apatrtments not Found");
     })
 });
 
