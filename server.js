@@ -10,6 +10,7 @@ const { stringify } = require("nodemon/lib/utils");
 mongoose.connect("mongodb+srv://software:software@cluster0.cv6lp.mongodb.net/apartmentsGuide", { useNewUrlParser: true}, {useUnifiedTopology: true})
 
 const userSchema = {
+    userID: Number,
     userType: Number,           //1 means landlord        2 means customer
     email: String,
     password: String, 
@@ -17,6 +18,7 @@ const userSchema = {
 
 const apartmentSchema = {
     apartmentStatus: Number,    //1 means avilable        2 means unavilable
+    apartmentID: Number,
     userID: Number,
     apartmentPicture: String,
     price: Number,
@@ -60,9 +62,32 @@ app.get("/apartments_view", function(req, res) {
         res.render('apartmentsView', {
             apartmentsList: apartments 
         })
-        if(apartments.length) console.log(apartments);
-        else console.log("Apatrtments not Found");
+        //if(apartments.length) console.log(apartments);
+        //else console.log("Apatrtments not Found");
     })
+});
+
+app.get("/apartment_details", function(req, res) {
+    var apartmentID = getQueryVariable("apartmentID");
+
+    Apartment.findOne({apartmentID: apartmentID}, function(err, details){
+        res.render('details', {
+            details: details 
+        })
+    })
+
+    function getQueryVariable(variable) {
+    var query = req._parsedUrl.search.substring(1);
+    var vars = query.split("?");
+
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+        return pair[1];
+        }
+    } 
+    console.log('Query Variable ' + variable + ' not found');
+    }
 });
 
 
@@ -120,15 +145,15 @@ app.post("/add_apartment", function(req, res) {
 // app.post("/add_apartment", function(req, res) {
 //     let newApartment = new Apartment({
 //         apartmentStatus: 1,
-//         apartmentPicture: "imgp2.jpg",
-//         userID: 3,
-//         price: 250,
-//         numOfRooms: 3,
-//         numOfBathroom: 2,
-//         area: 60,
-//         location: "Naser, Gaza",
-//         contactNum:"0595354679",
-//         description: "The apartment is in good location"
+//         apartmentPicture: "imgp3.jpg",
+//         userID: 4,
+//         price: 200,
+//         numOfRooms: 2,
+//         numOfBathroom: 1,
+//         area: 70,
+//         location: "Jalal St., Khanyuons",
+//         contactNum:"0595434226",
+//         description: "You'll never find a great deal like this"
 //     });
 //     newApartment.save();
 //     console.log("Apartment is saved")
