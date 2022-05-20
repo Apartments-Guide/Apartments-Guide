@@ -25,9 +25,9 @@
 		<option value="1">Landlord</option>
 		<option value="2">Customer</option>
 	</select>
-	<input type="email" class="input-box" placeholder="Your Email" name="email">
-	<input type="password" class="input-box" placeholder="Your Password" name="password">
-	<button type= "submit" class="signup-btn"> Sign up</button>
+	<input type="email" class="input-box" placeholder="Your Email" name="email" id="email" required>
+	<input type="password" class="input-box" placeholder="Your Password" name="password" id="password" required>
+	<button type= "submit" class="signup-btn" id='submit'> Sign up</button>
 	<hr>
 	<p style="color:#1c8adb; font-family: 'Times New Roman'; font-weight: bold;">OR</p>
 	<button type="submit'" class="signup-btn"> Login </button>
@@ -35,5 +35,122 @@
 	</form>
 
 	</div>
+	<script>
+		
+
+//getStarted = document.getElementsByClassName("signupbtn")[0],
+email = document.getElementById("email").value;
+password = document.getElementById("password").value;
+
+$('#submit').click(function(assetInfo){
+	cosnole.log(email, 'pkpkp[[pp[p');
+  if (email== '' || password == '') {
+    alert('Input can not be left blank');
+  }
+});
+msgEmpty = document.getElementById("msgEmpty"),
+input = Array.from(document.getElementsByTagName("input")),
+mailExistMsg = document.getElementById("msgExistMail");
+mailIncorrectMsg = document.getElementById("msgIncorrectMail");
+passMsg = document.getElementById("msgPass");
+
+input.forEach(element => {
+    element.addEventListener('change', removeAlert)
+});
+function removeAlert() {
+    msgEmpty.style.display = "none"
+    mailExistMsg.style.display = "none"
+    mailIncorrectMsg.style.display = "none"
+    passMsg.style.display = "none"
+}
+
+
+
+function IsValidData (email, password){
+    IsValidEmail(email)
+    isVaalidPassword(password)
+    return IsValidName(name) && IsValidEmail(email) && isVaalidPassword(password);
+}
+
+function IsValidEmail(email){
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if(email.match(validRegex) != null){
+        return true;
+    }
+    mailIncorrectMsg.style.display = "block"
+    return false;
+    
+}
+
+function isVaalidPassword(password){
+    let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+    if(password.match(strongRegex) != null){
+        return true;
+    }
+    passMsg.style.display = "block"
+    return false;
+}
+
+
+// getStarted.addEventListener('click', signUp);
+
+
+
+// async function signUp() {
+//     let user = {
+//         username:"",
+//         email:"",
+//         password:"",
+//         currency:""
+//     };
+//     let user_Name = document.getElementById("name").value,
+//         user_Email = document.getElementById("email").value,
+//         user_Password = document.getElementById("password").value,
+//         user_Currency = document.getElementById("currency").value;
+
+//         IsValidData(user_Name,user_Email,user_Password)
+//     if(checkEmptyInput(user_Name,user_Email,user_Password) && !IsValidData(user_Name,user_Email,user_Password))
+//         return;
+//     user.username = user_Name
+//     user.email = user_Email
+//     user.password = user_Password
+//     user.currency = user_Currency
+
+//     try {
+//         const response = await fetch("http://127.0.0.1:3000/api/v1/auth/signup", {
+//             "method": "post",
+//             "headers": {
+//                 "Content-Type": "application/json"
+//             },
+//             "body": JSON.stringify(user)
+
+//         })
+//         console.log(response)
+//         if(response.status == 409){
+//             mailExistMsg.style.display = "block"
+//         }
+//     } catch (e) {
+//         console.log("error", e.message)
+//     }
+    
+// }
+
+
+//user can show or hide password
+function showPassword() {
+    const togglePassword = document.getElementsByClassName('hidePsw')[0];
+    togglePassword.onclick = function () {
+      let password = document.getElementById('password');
+      // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      // toggle the eye slash icon
+      const src= togglePassword.getAttribute('src')==='../assets/img/hideEye.svg'?'../assets/img/showEye.svg':'../assets/img/hideEye.svg';
+      togglePassword.setAttribute('src',src);
+    };
+}
+  showPassword();
+
+	</script>
 	</body>
  </html>
