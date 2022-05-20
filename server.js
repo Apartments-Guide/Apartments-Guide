@@ -97,7 +97,7 @@ app.get("/addapartments", function(req, res) {
 });
 
 app.get("/signup", function(req, res) {
-    res.sendFile(__dirname + "/views/sign_up.html")
+    res.sendFile(__dirname + "/SignUp/sign_up.html")
 });
 
 app.post("/signup", function(req, res) {
@@ -135,11 +135,11 @@ app.post("/login", function(req, res) {
         if(user) {
             if(user.password == checkUser.password) {
                 if(user.userType == '1')
-                    //res.redirect("/addapartments");
-                    console.log('Email is not found');
+                    res.redirect("/addapartments");
+                    // console.log('Email is not found');
                 else
-                console.log('Email is not found');
-                    //res.redirect("/apartments_view");
+                // console.log('Email is not found');
+                    res.redirect("/apartments_view");
             }
             else {
                 //console.log('Password is wrong'); //Show it to the user
