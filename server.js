@@ -26,6 +26,7 @@ const apartmentSchema = {
     location: String,
     contactNum: String,
     description: String,
+    img: String,
 }
 
 const User = mongoose.model("User", userSchema);
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/"));
 app.use(express.static(__dirname + '/Home'));
 app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/Add'));
 // app.use(express.static(__dirname + '/Login'));
 // app.use(express.static(__dirname + '/SignUp'));
 
@@ -64,6 +66,9 @@ app.get("/apartments_view", function(req, res) {
         else console.log("Apatrtments not Found");
     })
 });
+app.get("/addapartments", function(req, res) {
+    res.sendFile(__dirname + "/Add/AddApartment.html")
+});
 
 
 app.post("/signup", function(req, res) {
@@ -85,7 +90,10 @@ app.post("/login", function(req, res) {
     User.findOne({email:checkUser.email}, function(err, user){
         if(user) {
             if(user.password == checkUser.password) {
-                res.redirect("/apartments_view");
+                if(user.userType == '1')
+                    res.redirect("/addapartments");
+                else
+                    res.redirect("/apartments_view");
             }
             else {
                 console.log('Password is wrong'); //Show it to the user
@@ -94,27 +102,24 @@ app.post("/login", function(req, res) {
             console.log('Email is not found'); //Show it to the user
         }
     })
-
     
 })
 
-
-
-//Landlord adds apartment
-app.post("/add_apartment", function(req, res) {
+app.post("/addapartments", function(req, res) {
     let newApartment = new Apartment({
         ApartmentStatus: req.body.ApartmentStatus,
-        userID: req.body.userID,
         price: req.body.price,
         numOfRooms: req.body.numOfRooms,
         numOfBathroom: req.body.numOfBathroom,
         area: req.body.area,
         location: req.body.location,
         contactNum: req.body.contactNum,
-        description: req.body.description
+        description: req.body.description,
+        img: req.body.img
     });
     newApartment.save();
-    res.redirect("/");
+    console.log("Apartment is saved")
+    res.redirect("/apartments_view");
 })
 
 // app.post("/add_apartment", function(req, res) {
