@@ -46,7 +46,7 @@ app.use(express.static(__dirname + '/Home'));
 app.use(express.static(__dirname + '/views'));
 app.use(express.static(__dirname + '/Add'));
 // app.use(express.static(__dirname + '/Login'));
-app.use(express.static(__dirname + '/SignUp'));
+// app.use(express.static(__dirname + '/views/sign'));
 
 
 
@@ -95,13 +95,25 @@ app.get("/addapartments", function(req, res) {
 });
 
 app.get("/signup", function(req, res) {
-    res.sendFile(__dirname + "/views/sign_up.html")
+    res.render('signup', {
+        passwordCheck: ""
+    })
 });
 
 app.post("/signup", function(req, res) {
+    function isValidPassword(password, res){
+        let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+        let result = 'The password is weak';
+        if(password.match(strongRegex) != null){
+                return true;
+        }
+        res.render('signup',{
+            passwordCheck: result
+        })
+        return false;
+    }
     let password = req.body.password;
-
-    if(isVaalidPassword(password, res)){
+    if(isValidPassword(password, res)){
         let newUser = new User({
             userType: req.body.userType,
             email: req.body.email,
@@ -111,17 +123,6 @@ app.post("/signup", function(req, res) {
         res.redirect("/login");
     }
 })
-    function isVaalidPassword(password, res){
-        let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        let result = 'The password is weak';
-        if(password.match(strongRegex) != null){
-                return true;
-        }
-        res.render('signup', {
-            passwordCheck: result
-        })
-        return false;
-    }
 
 app.post("/login", function(req, res) {
     const checkUser = new User({
