@@ -41,56 +41,6 @@
 	<script>
 
 
-getStarted = document.getElementsByClassName("signup-btn")[0],
-email = document.getElementById("email").value;
-password = document.getElementById("password").value;
-
-input = Array.from(document.getElementsByTagName("input")),
-mailExistMsg = document.getElementById("msgExistMail");
-mailIncorrectMsg = document.getElementById("msgIncorrectMail");
-passMsg = document.getElementById("msgPass");
-mailExistMsg.style.display = "none"
-mailIncorrectMsg.style.display = "none"
-passMsg.style.display = "none"
-
-input.forEach(element => {
-    element.addEventListener('change', removeAlert)
-});
-function removeAlert() {
-    mailExistMsg.style.display = "none"
-    mailIncorrectMsg.style.display = "none"
-    passMsg.style.display = "none"
-}
-
-
-
-function isVaalidPassword(password){
-    let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-    if(password.match(strongRegex) != null){
-        return true;
-    }
-    passMsg.style.display = "block"
-    return false;
-}
-
-
-getStarted.addEventListener('click', IsValidData);
-
-
-//user can show or hide password
-// function showPassword() {
-//     const togglePassword = document.getElementsByClassName('hidePsw')[0];
-//     togglePassword.onclick = function () {
-//       let password = document.getElementById('password');
-//       // toggle the type attribute
-//       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-//       password.setAttribute('type', type);
-//       // toggle the eye slash icon
-//       const src= togglePassword.getAttribute('src')==='../assets/img/hideEye.svg'?'../assets/img/showEye.svg':'../assets/img/hideEye.svg';
-//       togglePassword.setAttribute('src',src);
-//     };
-// }
-//   showPassword();
 
 	</script>
 	</body>
