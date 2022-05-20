@@ -91,6 +91,7 @@ app.get("/apartment_details", function(req, res) {
     console.log('Query Variable ' + variable + ' not found');
     }
 });
+
 app.get("/addapartments", function(req, res) {
     res.sendFile(__dirname + "/Add/AddApartment.html")
 });
@@ -198,7 +199,6 @@ app.post("/addapartments", function(req, res) {
         img: req.body.img
     });
     newApartment.save();
-    console.log("Apartment is saved")
     res.redirect("/apartments_view");
 })
 

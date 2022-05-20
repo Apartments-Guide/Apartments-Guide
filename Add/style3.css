@@ -1,4 +1,4 @@
-/*Google Fonts */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 *{
   font-family: 'Poppins', sans-serif;
@@ -10,13 +10,13 @@
   list-style:none;
   text-decoration:none;
 }
-  /*variables*/
+
 :root{
    --main-color:#2288ff;
    --second-color:#192f6a;
    --text-color:#314862;
    --bg-color:#fff; 
-/* Box Shadow */
+
    --box-shadow: 2px 2px 18px rgb(14 52 54 / 15%);
 }
 img {
