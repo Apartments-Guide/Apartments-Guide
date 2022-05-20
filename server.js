@@ -6,7 +6,7 @@ const ejs = require('ejs');
 
 app.set('view engine', 'ejs');
 
-const { stringify } = require("nodemon/lib/utils");
+const { stringify, home } = require("nodemon/lib/utils");
 mongoose.connect("mongodb+srv://software:software@cluster0.cv6lp.mongodb.net/apartmentsGuide", { useNewUrlParser: true}, {useUnifiedTopology: true})
 
 const userSchema = {
@@ -101,48 +101,32 @@ app.get("/signup", function(req, res) {
 });
 
 app.post("/signup", function(req, res) {
-    let result = 'There is something wrong';
-
-    function isValidPassword(password, res){
-        let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        if(password.match(strongRegex) != null){
-                return true;
-        }
-        result = 'The password is weak, try more than 8 chars include A-Z, a-z, 0-9, !@#%&';
-        res.render('signup',{
-            passwordCheck: result
-        })
-        return false;
-    }
-
-    const getUser = async(email) => { 
-        return await User.findOne({email: email});
-    }
-
-    function emailIsTaken(email, res) {     
-        getUser(email).then(function(result) {
-            if(result != null) {
-                result = 'Email is already taken';
-                res.render('signup',{
-                    passwordCheck: result
-                })
-            return true;
-        }
-        });
-        return false;
-    }
-
     let email = req.body.email;
     let password = req.body.password;
-    if(!(emailIsTaken(email, res)) && isValidPassword(password, res)){
-        let newUser = new User({
-            userType: req.body.userType,
-            email: req.body.email,
-            password: password
-        });
-        newUser.save();
-        res.redirect("/login");
-    }
+    User.findOne({email:email}, function(err, user){
+        if(!user){
+            let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+            if(password.match(strongRegex) != null){
+                let newUser = new User({
+                    userType: req.body.userType,
+                    email: email,
+                    password: password
+                });
+                newUser.save();
+                res.redirect("/login");
+            }         
+            else{
+                res.render('signup',{
+                    passwordCheck: 'The password is weak, try more than 8 chars include A-Z, a-z, 0-9, !@#%&'
+                })
+            }
+        }
+        else{
+                res.render('signup',{
+                    passwordCheck: 'Email is already taken'
+                })
+        }  
+    })
 })
 
 app.post("/login", function(req, res) {
@@ -156,19 +140,18 @@ app.post("/login", function(req, res) {
             if(user.password == checkUser.password) {
                 if(user.userType == '1')
                     res.redirect("/addapartments");
-                    // console.log('Email is not found');
                 else
-                // console.log('Email is not found');
                     res.redirect("/apartments_view");
             }
             else {
-                //console.log('Password is wrong'); //Show it to the user
-                console.log('Email is not found');
+                res.render('login',{
+                    passwordCheck: 'Password is wrong'
+                })
             }
         } else {
-            // res.send('Email is not found');
-            // res.jsonp({success : true})
-            console.log('Email is not found'); //Show it to the user
+            res.render('login',{
+                passwordCheck: 'Email is not found'
+            })
         }
     })
     
