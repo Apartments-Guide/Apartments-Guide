@@ -98,56 +98,26 @@ app.get("/addapartments", function(req, res) {
 
 
 app.post("/signup", function(req, res) {
-    let userType = req.body.userType;
-    let email = req.body.email;
     let password = req.body.password;
-    
-
-
-    // function checkEmptyInput(email, password) {
-    //     if (email == '' || password == '') {
-    //         //msgEmpty.style.display = "block";
-    //         return true
-    //     }
-    //     return false
-    // }  
-    
-    // function IsValidEmail(email){
-    //     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    //     if(email.match(validRegex) != null){
-    //         return true;
-    //     }
-    //     // mailIncorrectMsg.style.display = "block"
-    //     return false;
-    // }
-    
-    // function isVaalidPassword(password){
-    //     let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-    //     if(password.match(strongRegex) != null){
-    //         return true;
-    //     }
-    //     //passMsg.style.display = "block"
-    //     return false;
-    // }
-
-    // function IsValidData (email, password){
-    //     if(checkEmptyInput(email, password)) return;
-    //     IsValidEmail(email)
-    //     isVaalidPassword(password)
-    //     return IsValidEmail(email) && isVaalidPassword(password);
-    // }
-
-    //if(IsValidData(email,password)){    
+    if(isVaalidPassword(password)){
         let newUser = new User({
-            userType: userType,
-            email: email,
+            userType: req.body.userType,
+            email: req.body.email,
             password: password
         });
         newUser.save();
         res.redirect("/login");
-    //}
+    }
 })
-
+    function isVaalidPassword(password){
+        let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+        if(password.match(strongRegex) == null){
+            if(password.length >= 8)
+                return true;
+        }
+        console.log(false);
+        return false;
+    }
 
 // app.post("/showpassword",function showPassword() {
 //     const togglePassword = document.getElementsByClassName('hidePsw')[0];
