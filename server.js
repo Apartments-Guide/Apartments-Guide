@@ -101,19 +101,40 @@ app.get("/signup", function(req, res) {
 });
 
 app.post("/signup", function(req, res) {
+    let result = 'There is something wrong';
+
     function isValidPassword(password, res){
         let strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-        let result = 'The password is weak';
         if(password.match(strongRegex) != null){
                 return true;
         }
+        result = 'The password is weak, try more than 8 chars include A-Z, a-z, 0-9, !@#%&';
         res.render('signup',{
             passwordCheck: result
         })
         return false;
     }
+
+    const getUser = async(email) => { 
+        return await User.findOne({email: email});
+    }
+
+    function emailIsTaken(email, res) {     
+        getUser(email).then(function(result) {
+            if(result != null) {
+                result = 'Email is already taken';
+                res.render('signup',{
+                    passwordCheck: result
+                })
+            return true;
+        }
+        });
+        return false;
+    }
+
+    let email = req.body.email;
     let password = req.body.password;
-    if(isValidPassword(password, res)){
+    if(!(emailIsTaken(email, res)) && isValidPassword(password, res)){
         let newUser = new User({
             userType: req.body.userType,
             email: req.body.email,
