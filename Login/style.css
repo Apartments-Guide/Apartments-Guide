@@ -144,3 +144,10 @@ Kr{
 	margin-top: 20px;
 	width: 80;
 	}
+
+.btn {
+	padding: 8px 22px;
+	background: var(--main-color);
+	color: var(--bg-color) ;
+	border-radius: 5rem;
+}

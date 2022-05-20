@@ -6,79 +6,136 @@ const ejs = require('ejs');
 
 app.set('view engine', 'ejs');
 
-const {stringify} = require("nodemon/lib/utils");
-mongoose.connect("mongodb+srv://software:software123@cluster0.cv6lp.mongodb.net/test", { useNewUrlParser: true}, {useUnifiedTopology: true})
+const { stringify } = require("nodemon/lib/utils");
+mongoose.connect("mongodb+srv://software:software@cluster0.cv6lp.mongodb.net/apartmentsGuide", { useNewUrlParser: true}, {useUnifiedTopology: true})
 
 const userSchema = {
-    userType: Number,    //1 means landlord        2 means customer
+    userType: Number,           //1 means landlord        2 means customer
     email: String,
     password: String, 
 }
 
 const apartmentSchema = {
-    ApartmentStatus: Number, //1 means avilable     2 means unavilable
+    apartmentStatus: Number,    //1 means avilable        2 means unavilable
+    userID: Number,
+    apartmentPicture: String,
     price: Number,
-    NumOfRooms: Number,
-    NumOfBathroom: Number,
+    numOfRooms: Number,
+    numOfBathroom: Number,
     area: Number,
     location: String,
-    ContactNum: String,
-    img: String,
+    contactNum: String,
+    description: String,
 }
 
 const User = mongoose.model("User", userSchema);
 const Apartment = mongoose.model("Apartment", apartmentSchema);
-const favorite = await
-    Apartment.findOne({
-        name: "ApartmentID"
-    });
-console.log("UserID", User.UserID);
+
+// const favorite = await
+//     Apartment.findOne({
+//         name: "ApartmentID"
+//     });
+// console.log("UserID", User.UserID);
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + "/"));
+app.use(express.static(__dirname + '/Home'));
+app.use(express.static(__dirname + '/views'));
+// app.use(express.static(__dirname + '/Login'));
+// app.use(express.static(__dirname + '/SignUp'));
 
-app.use(express.static(__dirname + '/SignUp'));
-app.use(express.static(__dirname + '/ApartmentsView'));
+
 
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/ApartmentsView/ApartmentsView.html")
-})
-
-app.get("/", function(req, res) {
-    Apartment.find({}, function(err, apartments){
-        res.render('ApartmentsView', {
-            ApartmentsList: apartments 
-        })
-    })
-})
-
-app.get("/home", function(req, res) {
     res.sendFile(__dirname + "/Home/home.html")
-})
+});
+app.get("/signup", function(req, res) {
+    res.sendFile(__dirname + "/SignUp/sign_up.html")
+});
+app.get("/login", function(req, res) {
+    res.sendFile(__dirname + "/Login/login.html")
+});
+app.get("/apartments_view", function(req, res) {
+    Apartment.find({}, function(err, apartments){
+        res.render('apartmentsView', {
+            apartmentsList: apartments 
+        })
+        if(apartments.length) console.log(apartments);
+        else console.log("Apatrtments not Found");
+    })
+});
 
-app.post("/", function(req, res) {
+
+app.post("/signup", function(req, res) {
     let newUser = new User({
         userType: req.body.userType,
         email: req.body.email,
         password: req.body.password
     });
     newUser.save();
-    res.redirect("/");
+    res.redirect("/login");
 })
 
-app.post("/", function(req, res) {
+app.post("/login", function(req, res) {
+    const checkUser = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    User.findOne({email:checkUser.email}, function(err, user){
+        if(user) {
+            if(user.password == checkUser.password) {
+                res.redirect("/apartments_view");
+            }
+            else {
+                console.log('Password is wrong'); //Show it to the user
+            }
+        } else {
+            console.log('Email is not found'); //Show it to the user
+        }
+    })
+
+    
+})
+
+
+
+//Landlord adds apartment
+app.post("/add_apartment", function(req, res) {
     let newApartment = new Apartment({
         ApartmentStatus: req.body.ApartmentStatus,
+        userID: req.body.userID,
         price: req.body.price,
-        NumOfRooms: req.body.NumOfRooms,
-        NumOfBathroom: req.body.NumOfBathroom,
+        numOfRooms: req.body.numOfRooms,
+        numOfBathroom: req.body.numOfBathroom,
         area: req.body.area,
         location: req.body.location,
-        ContactNum: req.body.ContactNum,
-        img: req.body.img
+        contactNum: req.body.contactNum,
+        description: req.body.description
     });
     newApartment.save();
     res.redirect("/");
 })
+
+// app.post("/add_apartment", function(req, res) {
+//     let newApartment = new Apartment({
+//         apartmentStatus: 1,
+//         apartmentPicture: "imgp2.jpg",
+//         userID: 3,
+//         price: 250,
+//         numOfRooms: 3,
+//         numOfBathroom: 2,
+//         area: 60,
+//         location: "Naser, Gaza",
+//         contactNum:"0595354679",
+//         description: "The apartment is in good location"
+//     });
+//     newApartment.save();
+//     console.log("Apartment is saved")
+//     res.redirect("/");
+// })
+
+
 app.listen(3000, function() {
     console.log("Server is running on 3000");
 });
